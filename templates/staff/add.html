@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新增员工</title>
+</head>
+<body>
+    <h2>新增员工</h2>
+    <form method="post">
+        {% csrf_token %}
+        <!-- 姓名 必填 -->
+        <p>员工姓名：<input type="text" name="name" maxlength="20" required></p>
+
+        <!-- 性别 单选框 -->
+        <p>性别：
+            <input type="radio" name="gender" value="M" id="m" checked>
+            <label for="m">男</label>
+            <input type="radio" name="gender" value="F" id="f">
+            <label for="f">女</label>
+        </p>
+
+        <!-- 身份证号 选填 -->
+        <p>身份证号：<input type="text" name="id_card" maxlength="18"></p>
+
+        <!-- 手机号 选填 -->
+        <p>手机号：<input type="text" name="phone" maxlength="11"></p>
+
+        <!-- 出生日期 选填 -->
+        <p>出生日期：<input type="date" name="birth"></p>
+
+        <!-- 住址 选填 -->
+        <p>住址：<input type="text" name="address" maxlength="200"></p>
+
+        <button type="submit">提交保存</button>
+    </form>
+    <a href="{% url 'staff_list' %}">返回列表</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>编辑员工</title>
+</head>
+<body>
+    <h2>编辑员工信息</h2>
+    <!-- 提交方式POST，修改数据必须POST -->
+    <form method="post">
+        {% csrf_token %}
+        <p>姓名：
+            <input type="text" name="name" value="{{ staff.name }}">
+        </p>
+        <p>性别：
+            <input type="radio" name="gender" value="M" {% if staff.gender == 'M' %}checked{% endif %}>男
+            <input type="radio" name="gender" value="F" {% if staff.gender == 'F' %}checked{% endif %}>女
+        </p>
+        <p>身份证号：
+            <input type="text" name="id_card" value="{{ staff.id_card }}">
+        </p>
+        <p>地址：
+            <input type="text" name="address" value="{{ staff.address }}">
+        </p>
+        <button type="submit">保存修改</button>
+    </form>
+    <a href="{% url 'staff_list' %}">返回列表</a>
+</body>
+</html>

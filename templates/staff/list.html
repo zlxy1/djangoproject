@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>员工列表测试页</title>
+    <style>
+        table {border-collapse: collapse; width: 80%; margin: 30px auto;}
+        td,th {border:1px solid #999; padding:8px 15px; text-align:center;}
+        th {background:#eee;}
+        .top-btn{width:80%;margin:0 auto;}
+        .search-box{width:80%;margin:10px auto;}
+        a{text-decoration: none;padding:4px 10px;background:#409eff;color:white;border-radius:3px;margin-right:8px;}
+        button{cursor: pointer;}
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center">全部员工列表</h2>
+    <div class="top-btn">
+        <a href="{% url 'staff_add' %}">新增员工</a>
+    </div>
+
+    <!-- 搜索框：提交到当前列表页，支持回填搜索条件 -->
+    <div class="search-box">
+        <form method="get">
+            姓名：
+            <input type="text" name="name" placeholder="输入姓名模糊搜索" value="{{ search_name }}">
+            &nbsp;&nbsp;
+            性别：
+            <select name="gender">
+                <option value="">全部</option>
+                <option value="M" {% if search_gender == 'M' %}selected{% endif %}>男</option>
+                <option value="F" {% if search_gender == 'F' %}selected{% endif %}>女</option>
+            </select>
+            <button type="submit">查询</button>
+            <button type="button" onclick="location.href='{% url 'staff_list' %}'" style="margin-left:8px;">重置</button>
+        </form>
+    </div>
+
+    <table>
+        <tr>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>地址</th>
+            <th>操作</th>
+        </tr>
+        {% for staff in staff_list %}
+        <tr>
+            <td>{{ staff.name }}</td>
+            <td>{{ staff.get_gender_display }}</td>
+            <td>{{ staff.address }}</td>
+            <td>
+                <a href="{% url 'staff_edit' staff.pk %}">编辑</a>
+                <form action="{% url 'staff_delete' staff.pk %}" method="post" style="display:inline;margin-left:6px;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('确定要删除该员工吗？')"
+                            style="background:#f56c6c;color:#fff;border:0;border-radius:3px;padding:4px 8px;">
+                        删除
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">暂无员工数据，请先添加测试数据</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
