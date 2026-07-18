@@ -7,7 +7,7 @@
         table {border-collapse: collapse; width: 80%; margin: 30px auto;}
         td,th {border:1px solid #999; padding:8px 15px; text-align:center;}
         th {background:#eee;}
-        .top-btn{width:80%;margin:0 auto;}
+        .top-btn{width:80%;margin:0 auto;display: flex;gap:10px;align-items: center;}
         .search-box{width:80%;margin:10px auto;}
         a{text-decoration: none;padding:4px 10px;background:#409eff;color:white;border-radius:3px;margin-right:8px;}
         button{cursor: pointer;}
@@ -17,6 +17,13 @@
     <h2 style="text-align:center">全部员工列表</h2>
     <div class="top-btn">
         <a href="{% url 'staff_add' %}">新增员工</a>
+        <!-- POST方式登出，带CSRF令牌，安全规范 -->
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding:4px 10px;background:#666;color:#fff;border:0;border-radius:3px;">
+                退出登录
+            </button>
+        </form>
     </div>
 
     <!-- 搜索框：提交到当前列表页，支持回填搜索条件 -->
